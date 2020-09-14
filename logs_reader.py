@@ -1,7 +1,8 @@
 import csv
 import math
-with open(r'C:\2020-08-20_10-59-45.csv',  newline='') as f:
+with open(r'C:\2020-08-20 10-59-12_target.csv',  newline='') as f:
     #C:\Users\Jura\Desktop\2019_11_15_flight_logs\VOLK\2020-08-20_10-59-45.csv
+    #2020-08-20 10-59-12_target.csv
     reader = csv.reader(f, delimiter=';')
     your_list = list(reader)
     list_row=[]
