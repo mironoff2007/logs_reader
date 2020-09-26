@@ -1,10 +1,21 @@
 import csv
 import math
 class Logs_reader:
+
+    def __init__(self):
+        self.lon0 = 0.0
+        self.lat0 = 0.0
+
+    def getLon0(self):
+        return self.lon0
+
+    def getLat0(self):
+        return self.lat0
+
+
     def readLog(self,s):
         with open( s,  newline='') as f:
-        #C:\Users\Jura\Desktop\2019_11_15_flight_logs\VOLK\2020-08-20_10-59-45.csv
-        #2020-08-20 10-59-12_target.csv
+
             reader = csv.reader(f, delimiter=';')
             your_list = list(reader)
             list_row = []
@@ -41,10 +52,13 @@ class Logs_reader:
                 print("next")
                 aim = False
                 end_aim = False
+            #logs fist line
             if (your_list[l][0] == "GPS")  and aim and not is_not_first:
                 is_not_first = True
                 lat1 = float(your_list[l][7])
                 lon1 = float(your_list[l][8])
+                self.lon0=lon1
+                self.lat0=lat1
             if (your_list[l][0] == "GPS") and aim and is_not_first:
 
                 lat2=float(your_list[l][7])
