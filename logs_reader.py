@@ -5,12 +5,17 @@ class Logs_reader:
     def __init__(self):
         self.lon0 = 0.0
         self.lat0 = 0.0
+        self.time0 = 0.0
 
     def getLon0(self):
         return self.lon0
 
     def getLat0(self):
         return self.lat0
+
+    def getSyncTime(self):
+        return self.time0
+
 
 
     def readLog(self,s):
@@ -57,8 +62,12 @@ class Logs_reader:
                 is_not_first = True
                 lat1 = float(your_list[l][7])
                 lon1 = float(your_list[l][8])
-                self.lon0=lon1
-                self.lat0=lat1
+
+                self.time0=int (your_list[l][1])
+
+                self.lon0 = lon1
+                self.lat0 = lat1
+
             if (your_list[l][0] == "GPS") and aim and is_not_first:
 
                 lat2=float(your_list[l][7])
@@ -97,4 +106,26 @@ class Logs_reader:
     #print( round(d_x,3), round(d_y,3))
 
             i=i+1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

@@ -10,3 +10,7 @@ target_reader.readLog(r'C:\Users\Jura\Desktop\2019_11_15_flight_logs\VOLK\2020-0
 
 print("lat0=",target_reader.getLat0())
 print("lon0=",target_reader.getLon0())
+
+
+
+print("delta_time=",(reader.getSyncTime()-target_reader.getSyncTime()))
