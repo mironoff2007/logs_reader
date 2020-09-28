@@ -16,7 +16,20 @@ class Logs_reader:
     def getSyncTime(self):
         return self.time0
 
+    def calcDist(self,lat1,lat2,lon1,lon2):
+        R = 6371000
 
+        f1 = lat1 * math.pi / 180;
+        f2 = lat2 * math.pi / 180;
+        df = (lat2 - lat1) * math.pi / 180;
+        dl = (lon2 - lon1) * math.pi / 180;  # x
+
+        a = math.sin(df / 2) * math.sin(df / 2) + math.cos(f1) * math.cos(f2) * math.sin(dl / 2) * math.sin(dl / 2);
+
+        c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a));
+
+        d = R * c
+        return d
 
     def readLog(self,s):
         with open( s,  newline='') as f:
@@ -24,7 +37,7 @@ class Logs_reader:
             reader = csv.reader(f, delimiter=';')
             your_list = list(reader)
             list_row = []
-            x_coord = 0.0;
+            x_coord = 0.0
             y_coord = 0.0
             is_not_first = False
             aim = False
@@ -33,7 +46,7 @@ class Logs_reader:
             lat2 = 0.0
             lon1 = 0.0  # x0
             lon2 = 0.0
-            R = 6371000;
+            R = 6371000
             label = ""
             ch7 = 0;
             alt = 0
@@ -97,7 +110,7 @@ class Logs_reader:
 
                 x_coord=x_coord+d_x
                 y_coord=y_coord+d_y
-                d = R * c;
+                d = R * c; #in meters
 
 
                 print( x_coord,",",y_coord,",",alt)
