@@ -6,6 +6,19 @@ class Logs_reader:
         self.lon0 = 0.0
         self.lat0 = 0.0
         self.time0 = 0.0
+        self.x_coord0=0
+        self.y_coord0=0
+        self.lon_obj=0
+        self.lat_obj=0
+
+    def setCoord0(self,lon_obj,lat_obj):
+        self.lon_obj = lon_obj
+        self.lat_obj = lat_obj
+
+
+    def __setPosition(self):
+        self.x_coord0 = self.calcDist(self.lon_obj,self.lon0,0,0)
+        self.y_coord0 = self.calcDist(0,0, self.lat_obj, self.lat0)
 
     def getLon0(self):
         return self.lon0
@@ -16,7 +29,7 @@ class Logs_reader:
     def getSyncTime(self):
         return self.time0
 
-    def calcDist(self,lat1,lat2,lon1,lon2):
+    def calcDist(self,lon1,lon2,lat1,lat2):
         R = 6371000
 
         f1 = lat1 * math.pi / 180;
@@ -31,7 +44,7 @@ class Logs_reader:
         d = R * c
         return d
 
-    def readLog(self,s):
+    def readLog(self,s,ch):
         with open( s,  newline='') as f:
 
             reader = csv.reader(f, delimiter=';')
@@ -59,7 +72,7 @@ class Logs_reader:
             list_row = your_list[l]
 
             if (your_list[l][0] == "RCIN"):
-                ch7 = float(your_list[l][1 + 7])
+                ch7 = float(your_list[l][1 + ch])
             if  (ch7 > 1600):
             # print("Signal=",your_list[l][1+7])
                 aim = True
@@ -108,8 +121,9 @@ class Logs_reader:
                 d_y = R * c_y;
                 if lat2<lat1 : d_y=-d_y
 
-                x_coord=x_coord+d_x
-                y_coord=y_coord+d_y
+                x_coord=x_coord+d_x+self.x_coord0
+                y_coord=y_coord+d_y+self.y_coord0
+
                 d = R * c; #in meters
 
 
