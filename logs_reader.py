@@ -44,6 +44,38 @@ class Logs_reader:
         d = R * c
         return d
 
+    def sync(self, target_file, hunter_file):
+        #search target sync line
+        with open(target_file, newline='') as f:
+            reader_target = csv.reader(f, delimiter=';')
+            list_target = list(reader_target)
+            ch=6
+            line_number_target=0
+        for l in range(0, len(list_target)):
+                row_target = list_target[l]
+
+                if (list_target[l][0] == "RCIN"):
+                    ch7 = float(list_target[l][1 + ch])
+                    if (ch7 > 1600):
+                        line_number_target=l
+        # _______________________
+        # search hunter sync line
+        with open(hunter_file, newline='') as f:
+            reader_hunter = csv.reader(f, delimiter=';')
+            list_hunter = list(reader_hunter)
+            ch = 7
+            line_number_hunter = 0
+        for k in range(0, len(list_hunter)):
+            row_target = list_hunter[k]
+
+            if (list_target[k][0] == "RCIN"):
+                ch7 = float(list_hunter[k][1 + ch])
+                if (ch7 > 1600):
+                    line_number_hunter = k
+        # _______________________
+
+
+
     def readLog(self,s,ch):
         with open( s,  newline='') as f:
 
