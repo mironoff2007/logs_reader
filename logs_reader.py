@@ -58,6 +58,7 @@ class Logs_reader:
                     ch7 = float(list_target[l][1 + ch])
                     if (ch7 > 1600):
                         line_number_target=l
+                        break
         # _______________________
         # search hunter sync line
         with open(hunter_file, newline='') as f:
@@ -72,7 +73,17 @@ class Logs_reader:
                 ch7 = float(list_hunter[k][1 + ch])
                 if (ch7 > 1600):
                     line_number_hunter = k
+                    break
         # _______________________
+        print(l,",",k)
+        f = open(r'D:\target_sync.txt', "w")
+        for ll in range(l, len(list_target)):
+            row_target = list_target[ll]
+            s1 = ''
+            s1 = ';'.join(row_target)
+            f.write(s1)
+            f.write('\n')
+        f.close()
 
 
 
