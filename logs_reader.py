@@ -61,37 +61,56 @@ class Logs_reader:
                         break
         # _______________________
         # search hunter sync line
-        with open(hunter_file, newline='') as f:
-            reader_hunter = csv.reader(f, delimiter=';')
+        with open(hunter_file, newline='') as file_to_read_hunter:
+            reader_hunter = csv.reader(file_to_read_hunter, delimiter=';')
             list_hunter = list(reader_hunter)
             ch = 7
             line_number_hunter = 0
         for k in range(0, len(list_hunter)):
-            row_target = list_hunter[k]
+            row_hunter = list_hunter[k]
 
-            if (list_target[k][0] == "RCIN"):
+            if (list_hunter[k][0] == "RCIN"):
                 ch7 = float(list_hunter[k][1 + ch])
                 if (ch7 > 1600):
                     line_number_hunter = k
                     break
         # _______________________
-        print(l,",",k)
-        f = open(r'D:\target_sync.txt', "w")
-        for ll in range(l, len(list_target)):
+        print(line_number_target,",",line_number_hunter)
+        f = open(r'D:\target_sync.csv', "w")
+        for ll in range(line_number_target, len(list_target)):
             row_target = list_target[ll]
-            s1 = ''
-            s1 = ';'.join(row_target)
-            f.write(s1)
-            f.write('\n')
+            if (list_target[ll][0] == "RCIN" or list_target[ll][0] == "GPS" ):
+                s1 = ''
+                s1 = ';'.join(row_target)
+                f.write(s1)
+                f.write('\n')
         f.close()
 
+        f_hunter = open(r'D:\hunter_sync.csv', "w")
+        for kk in range(k, len(list_hunter)):
+            row_hunter = list_hunter[kk]
+            if (list_hunter[kk][0] == "RCIN" or list_hunter[kk][0] == "GPS"):
+                s1 = ''
+                s1 = ';'.join(row_hunter)
+                f_hunter.write(s1)
+                f_hunter.write('\n')
+        f_hunter.close()
+
+        self.readLog(r'D:\target_sync.csv',r'D:\hunter_sync.csv',6)
 
 
-    def readLog(self,s,ch):
+    def readLog(self,s_target,s,ch):
         with open( s,  newline='') as f:
+
+            file_target=open(s_target,'r')
+            target_reader=csv.reader(file_target, delimiter=';')
+            target_lines=list(target_reader)
+            target_lines_number=len(target_lines)
 
             reader = csv.reader(f, delimiter=';')
             your_list = list(reader)
+
+            hunter_lines_number=len(your_list)
             list_row = []
             x_coord = 0.0
             y_coord = 0.0
