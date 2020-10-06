@@ -1,7 +1,7 @@
 from logs_reader import Logs_reader
 #
 reader_volk = Logs_reader()
-reader_volk.sync(r'C:\Users\Jura\Desktop\2019_11_15_flight_logs\VOLK\2020-08-20 10-59-12_tar.csv',r'C:\Users\Jura\Desktop\2019_11_15_flight_logs\VOLK\2020-08-20_10-59-45_2.csv')
+reader_volk.sync(r'C:\Users\Jura\Desktop\2019_11_15_flight_logs\VOLK\2020-08-20 10-59-12_tar.csv',r'C:\Users\Jura\Desktop\2019_11_15_flight_logs\VOLK\2020-08-20_10-59-45.csv')
 
 # reader_volk.readLog(r'C:\Users\Jura\Desktop\2019_11_15_flight_logs\VOLK\2020-08-20_10-59-45_2.csv',7)
 #

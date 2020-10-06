@@ -101,6 +101,9 @@ class Logs_reader:
             list_row = []
             x_coord = 0.0
             y_coord = 0.0
+            x_coord_tar = 0.0
+            y_coord_tar = 0.0
+
             is_not_first = False
             aim = False
             end_aim = False
@@ -108,17 +111,23 @@ class Logs_reader:
             lat2 = 0.0
             lon1 = 0.0  # x0
             lon2 = 0.0
+            lat1_tar = 0.0  # y0
+            lat2_tar = 0.0
+            lon1_tar = 0.0  # x0
+            lon2_tar = 0.0
             R = 6371000
             label = ""
             ch7 = 0;
             alt = 0
+            alt_tar=0
             # print(your_list[1])
             i = 0;
             # lat1=float(your_list[1][11])
             # lon1=float(your_list[1][12])
 
-        for l in range(0, len(your_list)):
-            list_row = your_list[l]
+        for l in range(0, min(len(your_list),len(target_lines)-1)):
+            row_hunter = your_list[l]
+            row_target = target_lines[l]
 
             if (your_list[l][0] == "RCIN"):
                 ch7 = float(your_list[l][1 + ch])
@@ -138,6 +147,9 @@ class Logs_reader:
                 lat1 = float(your_list[l][7])
                 lon1 = float(your_list[l][8])
 
+                lat1_tar = float(target_lines[l][7])
+                lon1_tar = float(target_lines[l][8])
+
                 self.time0=int (your_list[l][1])
 
                 self.lon0 = lon1
@@ -152,12 +164,27 @@ class Logs_reader:
                 d_x = self.coord_conv.CalcXCoord(lon1,lat1,lon2,lat2)
                 d_y = self.coord_conv.CalcYCoord(lon1,lat1,lon2,lat2)
 
-                x_coord=x_coord+d_x+self.x_coord0
-                y_coord=y_coord+d_y+self.y_coord0
+                x_coord=x_coord+d_x
+                y_coord=y_coord+d_y
 
-                print( x_coord,",",y_coord,",",alt)
-                lon1=lon2
-                lat1=lat2
+
+            #target
+                lat2_tar = float(target_lines[l][7])
+                lon2_tar = float(target_lines[l][8])
+                alt_tar = target_lines[l][9]
+
+                d_x_tar = self.coord_conv.CalcXCoord(lon1_tar, lat1_tar, lon2_tar, lat2_tar)
+                d_y_tar = self.coord_conv.CalcYCoord(lon1_tar, lat1_tar, lon2_tar, lat2_tar)
+
+                x_coord_tar = x_coord_tar + d_x_tar + self.x_coord0
+                y_coord_tar = y_coord_tar + d_y_tar + self.y_coord0
+
+                print(x_coord, ",", y_coord, ",", alt,",",x_coord_tar, ",", y_coord_tar, ",", alt_tar)
+
+                lon1_tar=lon2_tar
+                lat1_tar=lat2_tar
+                lon1 = lon2
+                lat1 = lat2
     #print( round(d_x,3), round(d_y,3))
 
             i=i+1
