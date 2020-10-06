@@ -32,6 +32,7 @@ class Logs_reader:
         return self.time0
 
     def sync(self, target_file, hunter_file):
+        prev_rcin=False
         #search target sync line
         with open(target_file, newline='') as f:
             reader_target = csv.reader(f, delimiter=';')
@@ -66,21 +67,26 @@ class Logs_reader:
         f = open(r'D:\target_sync.csv', "w")
         for ll in range(line_number_target, len(list_target)):
             row_target = list_target[ll]
-            if (list_target[ll][0] == "RCIN" or list_target[ll][0] == "GPS" ):
+            if ((list_target[ll][0] == "RCIN" and not prev_rcin) or list_target[ll][0] == "GPS" ):
                 s1 = ''
                 s1 = ';'.join(row_target)
                 f.write(s1)
                 f.write('\n')
+                if (list_target[ll][0] == "RCIN"): prev_rcin = True
+                else: prev_rcin=False
         f.close()
 
+        prev_rcin=False
         f_hunter = open(r'D:\hunter_sync.csv', "w")
         for kk in range(k, len(list_hunter)):
             row_hunter = list_hunter[kk]
-            if (list_hunter[kk][0] == "RCIN" or list_hunter[kk][0] == "GPS"):
+            if ((list_hunter[kk][0] == "RCIN" and not prev_rcin) or list_hunter[kk][0] == "GPS"):
                 s1 = ''
                 s1 = ';'.join(row_hunter)
                 f_hunter.write(s1)
                 f_hunter.write('\n')
+                if (list_hunter[kk][0] == "RCIN"): prev_rcin = True
+                else: prev_rcin=False
         f_hunter.close()
 
         self.readLog(r'D:\target_sync.csv',r'D:\hunter_sync.csv',6)
