@@ -11,6 +11,7 @@ class Logs_reader:
         self.y_coord0=0
         self.lon_obj=0
         self.lat_obj=0
+        self.sect=0
         self.coord_conv=Converter.Coordinates_converter
 
     def setCoord0(self,lon_obj,lat_obj):
@@ -130,10 +131,13 @@ class Logs_reader:
             i = 0;
             # lat1=float(your_list[1][11])
             # lon1=float(your_list[1][12])
+        self.sect=1
+        f_write = open(r'D:\section_1.csv', "w")
 
         for l in range(0, min(len(your_list),len(target_lines)-1)):
             row_hunter = your_list[l]
             row_target = target_lines[l]
+            sect=1
 
             if (your_list[l][0] == "RCIN"):
                 ch7 = float(your_list[l][1 + ch])
@@ -147,6 +151,13 @@ class Logs_reader:
                 print("next")
                 aim = False
                 end_aim = False
+
+                f_write.close()
+                f_write = open(r'D:\section_'+str(self.sect)+'.csv', "w")
+
+                self.sect = self.sect + 1
+
+
             #logs fist line
             if (your_list[l][0] == "GPS")  and aim and not is_not_first:
                 is_not_first = True
@@ -184,9 +195,12 @@ class Logs_reader:
 
                 x_coord_tar = x_coord_tar + d_x_tar + self.x_coord0
                 y_coord_tar = y_coord_tar + d_y_tar + self.y_coord0
+                s1=''
+                s1=str(x_coord)+ ","+ str(y_coord)+ ","+ str(alt)+","+str(x_coord_tar)+ ","+str(y_coord_tar)+","+ str(alt_tar)
 
-                print(x_coord, ",", y_coord, ",", alt,",",x_coord_tar, ",", y_coord_tar, ",", alt_tar)
-
+                print(s1)
+                f_write.write(s1)
+                f_write.write('\n')
                 lon1_tar=lon2_tar
                 lat1_tar=lat2_tar
                 lon1 = lon2
