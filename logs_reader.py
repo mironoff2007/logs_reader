@@ -131,23 +131,25 @@ class Logs_reader:
             i = 0;
             # lat1=float(your_list[1][11])
             # lon1=float(your_list[1][12])
+
         self.sect=1
         f_write = open(r'D:\section_1.csv', "w")
 
+        ch=8
         for l in range(0, min(len(your_list),len(target_lines)-1)):
             row_hunter = your_list[l]
             row_target = target_lines[l]
             sect=1
 
             if (your_list[l][0] == "RCIN"):
-                ch7 = float(your_list[l][1 + ch])
-            if  (ch7 > 1600):
+                ch_v = float(your_list[l][0 + ch])
+            if  (ch_v > 1600):
             # print("Signal=",your_list[l][1+7])
                 aim = True
-            if((ch7 < 1600) and aim):
+            if((ch_v < 1600) and aim):
                 end_aim = True
 
-            if (ch7 > 1600 and end_aim):
+            if (ch_v > 1600 and end_aim):
                 print("next")
                 aim = False
                 end_aim = False
