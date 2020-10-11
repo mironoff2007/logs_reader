@@ -1,7 +1,9 @@
 import csv
 import math
+
 import coordinates_converter as Converter
 class Logs_reader:
+
 
     def __init__(self):
         self.lon0 = 0.0
@@ -178,27 +180,27 @@ class Logs_reader:
 
                 lat2=float(your_list[l][7])
                 lon2=float(your_list[l][8])
-                alt=your_list[l][9]
+                alt="{:.2f}".format(float(your_list[l][9]))
 
                 d_x = self.coord_conv.CalcXCoord(lon1,lat1,lon2,lat2)
                 d_y = self.coord_conv.CalcYCoord(lon1,lat1,lon2,lat2)
 
-                x_coord=x_coord+d_x
-                y_coord=y_coord+d_y
+                x_coord=round(x_coord+d_x,3)
+                y_coord=round(y_coord+d_y,3)
 
 
             #target
                 lat2_tar = float(target_lines[l][7])
                 lon2_tar = float(target_lines[l][8])
-                alt_tar = target_lines[l][9]
+                alt_tar ="{:.2f}".format(float(target_lines[l][9]))
 
                 d_x_tar = self.coord_conv.CalcXCoord(lon1_tar, lat1_tar, lon2_tar, lat2_tar)
                 d_y_tar = self.coord_conv.CalcYCoord(lon1_tar, lat1_tar, lon2_tar, lat2_tar)
 
-                x_coord_tar = x_coord_tar + d_x_tar + self.x_coord0
-                y_coord_tar = y_coord_tar + d_y_tar + self.y_coord0
+                x_coord_tar = round(x_coord_tar + d_x_tar + self.x_coord0,3)
+                y_coord_tar = round(y_coord_tar + d_y_tar + self.y_coord0,3)
                 s1=''
-                s1=str(x_coord)+ ","+ str(y_coord)+ ","+ str(alt)+","+str(x_coord_tar)+ ","+str(y_coord_tar)+","+ str(alt_tar)
+                s1=str(x_coord).replace('.',',')+ ";"+ str(y_coord).replace('.',',')+ ";"+ str(alt).replace('.',',')+";"+str(x_coord_tar).replace('.',',')+ ";"+str(y_coord_tar).replace('.',',')+";"+ str(alt_tar).replace('.',',')
 
                 print(s1)
                 f_write.write(s1)
