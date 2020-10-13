@@ -136,6 +136,7 @@ class Logs_reader:
 
         self.sect=1
         f_write = open(r'D:\section_1.csv', "w")
+        f_write_gps = open(r'D:\section_1_gps.csv', "w")
 
         ch=8
         for l in range(0, min(len(your_list),len(target_lines)-1)):
@@ -158,6 +159,9 @@ class Logs_reader:
 
                 f_write.close()
                 f_write = open(r'D:\section_'+str(self.sect)+'.csv', "w")
+
+                f_write_gps.close()
+                f_write_gps = open(r'D:\section_' + str(self.sect) + '_gps.csv', "w")
 
                 self.sect = self.sect + 1
 
@@ -201,10 +205,15 @@ class Logs_reader:
                 y_coord_tar = round(y_coord_tar + d_y_tar + self.y_coord0,3)
                 s1=''
                 s1=str(x_coord).replace('.',',')+ ";"+ str(y_coord).replace('.',',')+ ";"+ str(alt).replace('.',',')+";"+str(x_coord_tar).replace('.',',')+ ";"+str(y_coord_tar).replace('.',',')+";"+ str(alt_tar).replace('.',',')
+                s2 = ''
+                s2 = str(lon2).replace('.', ',') + ";" + str(lat2).replace('.', ',') + ";" +  str(alt).replace('.',',')+";"+str(lon2_tar).replace('.',',')+ ";"+str(lat2_tar).replace('.',',')+";"+ str(alt_tar).replace('.',',')
 
                 print(s1)
                 f_write.write(s1)
                 f_write.write('\n')
+                f_write_gps.write(s2)
+                f_write_gps.write('\n')
+
                 lon1_tar=lon2_tar
                 lat1_tar=lat2_tar
                 lon1 = lon2

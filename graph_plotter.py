@@ -36,20 +36,36 @@ with open(file_path, newline='') as f:
         list_z1.append(float(row[2].replace(',', '.')))
         list_z2.append(float(row[5].replace(',', '.')))
         list_i.append(i)
-
+    plt.figure(0)
     plt.plot(list_x,list_y,label="hunter")
     plt.plot(list_x2,list_y2,label="target")
     plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left',ncol=2, mode="expand", borderaxespad=0.)
     #plt.yticks(np.arange(100, 170, 5))
     plt.ylabel('XY coordinates')
-    plt.figure(0)
 
+    plt.figure(1)
     plt.plot(list_i,list_z1,label="hunter")
     plt.plot(list_i, list_z2, label="target")
     plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left', ncol=2, mode="expand", borderaxespad=0.)
     plt.ylabel('Altitude')
-    plt.figure(1)
 
+    plt.figure(2)
+    plt.plot(list_i, list_x, label="hunter x(t)")
+    plt.plot(list_i, list_x2, label="target x(t)")
+    plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left', ncol=2, mode="expand", borderaxespad=0.)
+    plt.ylabel('X(t)')
+
+    plt.figure(3)
+    plt.plot(list_i, list_y, label="hunter y(t)")
+    plt.plot(list_i, list_y2, label="target x(t)")
+    plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left', ncol=2, mode="expand", borderaxespad=0.)
+    plt.ylabel('Y(t)')
+
+    plt.figure(4)
+    plt.plot(list_i, list_z1, label="hunter H(t)")
+    plt.plot(list_i, list_z2, label="target H(t)")
+    plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left', ncol=2, mode="expand", borderaxespad=0.)
+    plt.ylabel('H(t)')
 
     plt.show()
 
