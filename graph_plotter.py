@@ -17,6 +17,7 @@ list_z1=[]
 list_z2=[]
 
 list_i=[]
+list_t=[]
 
 file_path = filedialog.askopenfilename()
 
@@ -36,6 +37,7 @@ with open(file_path, newline='') as f:
         list_z1.append(float(row[2].replace(',', '.')))
         list_z2.append(float(row[5].replace(',', '.')))
         list_i.append(i)
+        list_t.append(float(row[6].replace(',', '.')))
 
     plt.figure(0)
     plt.plot(list_x,list_y,label="hunter")
@@ -46,29 +48,29 @@ with open(file_path, newline='') as f:
     plt.ylabel('XY coordinates')
 
     plt.figure(1)
-    plt.plot(list_i,list_z1,label="hunter")
-    plt.plot(list_i, list_z2, label="target")
+    plt.plot(list_t,list_z1,label="hunter")
+    plt.plot(list_t, list_z2, label="target")
     plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left', ncol=2, mode="expand", borderaxespad=0.)
     plt.grid(color='k', linestyle='-', linewidth=1)
     plt.ylabel('Altitude')
 
     plt.figure(2)
-    plt.plot(list_i, list_x, label="hunter x(t)")
-    plt.plot(list_i, list_x2, label="target x(t)")
+    plt.plot(list_t, list_x, label="hunter x(t)")
+    plt.plot(list_t, list_x2, label="target x(t)")
     plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left', ncol=2, mode="expand", borderaxespad=0.)
     plt.ylabel('X(t)')
     plt.grid(color='k', linestyle='-', linewidth=1)
 
     plt.figure(3)
-    plt.plot(list_i, list_y, label="hunter y(t)")
-    plt.plot(list_i, list_y2, label="target x(t)")
+    plt.plot(list_t, list_y, label="hunter y(t)")
+    plt.plot(list_t, list_y2, label="target y(t)")
     plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left', ncol=2, mode="expand", borderaxespad=0.)
     plt.ylabel('Y(t)')
     plt.grid(color='k', linestyle='-', linewidth=1)
 
     plt.figure(4)
-    plt.plot(list_i, list_z1, label="hunter H(t)")
-    plt.plot(list_i, list_z2, label="target H(t)")
+    plt.plot(list_t, list_z1, label="hunter H(t)")
+    plt.plot(list_t, list_z2, label="target H(t)")
     plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left', ncol=2, mode="expand", borderaxespad=0.)
     plt.ylabel('H(t)')
     plt.grid(color='k', linestyle='-', linewidth=1)

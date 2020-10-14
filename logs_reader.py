@@ -167,7 +167,10 @@ class Logs_reader:
                 f_write_gps.close()
                 f_write_gps = open(r'D:\section_' + str(self.sect) + '_gps.csv', "w")
 
-                t0=t
+                t0=float(your_list[l][1])/1000000
+
+                is_not_first=False
+
 
 
             #logs fist line
@@ -181,18 +184,25 @@ class Logs_reader:
 
                 self.time0=int (your_list[l][1])
 
-                self.lon0 = lon1
-                self.lat0 = lat1
-
                 mark = int(your_list[l][1])
                 t0=float(your_list[l][1])/1000000
 
+                x_coord_tar = round(0 + self.x_coord0, 3)
+                y_coord_tar = round(0 + self.y_coord0, 3)
+                alt_tar = "{:.2f}".format(float(target_lines[l][9]))
+                alt = "{:.2f}".format(float(your_list[l][9]))
+                s1 = ''
+                s1 = str(0).replace('.', ',') + ";" + str(0).replace('.', ',') + ";" + str(alt).replace('.',',') + ";" + str(x_coord_tar).replace('.', ',') + ";" + str(y_coord_tar).replace('.', ',') + ";" + str(alt_tar).replace('.', ',') + ";" + str(0).replace('.', ',') + ";" + str(mark)
+                f_write.write(s1)
+                f_write.write('\n')
 
-            if (your_list[l][0] == "GPS") and aim and is_not_first:
+
+            elif (your_list[l][0] == "GPS") and aim and is_not_first:
             #hunter
                 lat2=float(your_list[l][7])
                 lon2=float(your_list[l][8])
                 alt="{:.2f}".format(float(your_list[l][9]))
+
                 t_cur=float(your_list[l][1])/1000000
                 t=t_cur-t0
                 mark = int(your_list[l][1])
@@ -222,8 +232,7 @@ class Logs_reader:
                 print(s1)
                 f_write.write(s1)
                 f_write.write('\n')
-                f_write_gps.write(s2)
-                f_write_gps.write('\n')
+
 
                 lon1_tar=lon2_tar
                 lat1_tar=lat2_tar
