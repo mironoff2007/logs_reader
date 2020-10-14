@@ -33,14 +33,9 @@ class Logs_reader:
 
         self.coord_conv=Converter.Coordinates_converter
 
-    def setCoord0(self,lon_obj,lat_obj):
-        self.lon_obj = lon_obj
-        self.lat_obj = lat_obj
-
-
     def __setPosition(self):
-        self.x_coord0 = self.coord_conv.calcDist(self.lon_obj,0,self.lon0,0)
-        self.y_coord0 = self.coord_conv.calcDist(0, self.lat_obj,0, self.lat0)
+        self.x_coord0 = self.coord_conv.CalcXCoord(self.lon1_hun,self.lat1_hun,self.lon1_tar,self.lat1_tar)
+        self.y_coord0 = self.coord_conv.CalcYCoord(self.lon1_hun,self.lat1_hun,self.lon1_tar,self.lat1_tar)
 
     def getLon0(self):
         return self.lon0
@@ -170,6 +165,13 @@ class Logs_reader:
 
                 is_not_first=False
 
+                x_coord=0
+                y_coord=0
+
+                x_coord_tar=0
+                y_coord_tar=0
+
+
             #logs fist line
             if (hunter_list[l][0] == "GPS")  and aim and not is_not_first:
                 is_not_first = True
@@ -179,6 +181,8 @@ class Logs_reader:
 
                 self.lat1_tar = float(target_lines[l][7])
                 self.lon1_tar = float(target_lines[l][8])
+
+                self.__setPosition()#set target pos
 
                 x_coord_tar = round(0 + self.x_coord0, 3)
                 y_coord_tar = round(0 + self.y_coord0, 3)
@@ -199,7 +203,7 @@ class Logs_reader:
             #hunter
                 self.lat2_hun=float(hunter_list[l][7])
                 self.lon2_hun=float(hunter_list[l][8])
-                self.alt="{:.2f}".format(float(hunter_list[l][9]))
+                self.alt_hun="{:.2f}".format(float(hunter_list[l][9]))
 
                 t_cur=float(hunter_list[l][1])/1000000
                 t=round(t_cur-self.t0,3)
@@ -221,8 +225,8 @@ class Logs_reader:
                 d_x_tar = self.coord_conv.CalcXCoord(self.lon1_tar, self.lat1_tar, self.lon2_tar, self.lat2_tar)
                 d_y_tar = self.coord_conv.CalcYCoord(self.lon1_tar, self.lat1_tar, self.lon2_tar, self.lat2_tar)
 
-                x_coord_tar = round(x_coord_tar + d_x_tar + self.x_coord0,3)
-                y_coord_tar = round(y_coord_tar + d_y_tar + self.y_coord0,3)
+                x_coord_tar = round(x_coord_tar + d_x_tar,3)
+                y_coord_tar = round(y_coord_tar + d_y_tar,3)
 
                 s1=''
                 s1=str(x_coord).replace('.',',')+ ";"+ str(y_coord).replace('.',',')+ ";"+ str(self.alt_hun).replace('.',',')+";"+str(x_coord_tar).replace('.',',')+ ";"+str(y_coord_tar).replace('.',',')+";"+ str(self.alt_tar).replace('.',',')+";"+str(t).replace('.', ',')+";"+str(mark)

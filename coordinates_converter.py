@@ -38,7 +38,7 @@ class Coordinates_converter:
 
         return d_y
 
-    def calcDist(self,lon1,lat1,lon2,lat2):
+    def calcDist(lon1,lat1,lon2,lat2):
         R = 6371000
 
         f1 = lat1 * math.pi / 180;

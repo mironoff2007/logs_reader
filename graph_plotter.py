@@ -47,12 +47,12 @@ with open(file_path, newline='') as f:
     plt.grid(color='k', linestyle='-', linewidth=1)
     plt.ylabel('XY coordinates')
 
-    plt.figure(1)
-    plt.plot(list_t,list_z1,label="hunter")
-    plt.plot(list_t, list_z2, label="target")
-    plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left', ncol=2, mode="expand", borderaxespad=0.)
-    plt.grid(color='k', linestyle='-', linewidth=1)
-    plt.ylabel('Altitude')
+    #plt.figure(1)
+    #plt.plot(list_t,list_z1,label="hunter")
+    #plt.plot(list_t, list_z2, label="target")
+    #plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc='lower left', ncol=2, mode="expand", borderaxespad=0.)
+    #plt.grid(color='k', linestyle='-', linewidth=1)
+    #plt.ylabel('Altitude')
 
     plt.figure(2)
     plt.plot(list_t, list_x, label="hunter x(t)")
