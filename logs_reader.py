@@ -92,7 +92,7 @@ class Logs_reader:
                 else: prev_rcin=False
         f_hunter.close()
 
-        self.readLog(r'D:\target_sync.csv',r'D:\hunter_sync.csv',6)
+        self.readLog(r'D:\target_sync.csv',r'D:\hunter_sync.csv',8)
 
 
     def readLog(self,s_target,s,ch):
@@ -112,6 +112,9 @@ class Logs_reader:
             y_coord = 0.0
             x_coord_tar = 0.0
             y_coord_tar = 0.0
+            t=0.0
+            t0=0.0
+            mark=0
 
             is_not_first = False
             aim = False
@@ -145,7 +148,7 @@ class Logs_reader:
             sect=1
 
             if (your_list[l][0] == "RCIN"):
-                ch_v = float(your_list[l][0 + ch])
+                ch_v = float(your_list[l][1 + ch])
             if  (ch_v > 1600):
             # print("Signal=",your_list[l][1+7])
                 aim = True
@@ -156,14 +159,15 @@ class Logs_reader:
                 print("next")
                 aim = False
                 end_aim = False
+                self.sect = self.sect + 1
 
                 f_write.close()
-                f_write = open(r'D:\section_'+str(self.sect)+'.csv', "w")
+                f_write = open(r'D:\section_' + str(self.sect)+'.csv', "w")
 
                 f_write_gps.close()
                 f_write_gps = open(r'D:\section_' + str(self.sect) + '_gps.csv', "w")
 
-                self.sect = self.sect + 1
+                t0=t
 
 
             #logs fist line
@@ -180,11 +184,18 @@ class Logs_reader:
                 self.lon0 = lon1
                 self.lat0 = lat1
 
-            if (your_list[l][0] == "GPS") and aim and is_not_first:
+                mark = int(your_list[l][1])
+                t0=float(your_list[l][1])/1000000
 
+
+            if (your_list[l][0] == "GPS") and aim and is_not_first:
+            #hunter
                 lat2=float(your_list[l][7])
                 lon2=float(your_list[l][8])
                 alt="{:.2f}".format(float(your_list[l][9]))
+                t_cur=float(your_list[l][1])/1000000
+                t=t_cur-t0
+                mark = int(your_list[l][1])
 
                 d_x = self.coord_conv.CalcXCoord(lon1,lat1,lon2,lat2)
                 d_y = self.coord_conv.CalcYCoord(lon1,lat1,lon2,lat2)
@@ -204,7 +215,7 @@ class Logs_reader:
                 x_coord_tar = round(x_coord_tar + d_x_tar + self.x_coord0,3)
                 y_coord_tar = round(y_coord_tar + d_y_tar + self.y_coord0,3)
                 s1=''
-                s1=str(x_coord).replace('.',',')+ ";"+ str(y_coord).replace('.',',')+ ";"+ str(alt).replace('.',',')+";"+str(x_coord_tar).replace('.',',')+ ";"+str(y_coord_tar).replace('.',',')+";"+ str(alt_tar).replace('.',',')
+                s1=str(x_coord).replace('.',',')+ ";"+ str(y_coord).replace('.',',')+ ";"+ str(alt).replace('.',',')+";"+str(x_coord_tar).replace('.',',')+ ";"+str(y_coord_tar).replace('.',',')+";"+ str(alt_tar).replace('.',',')+";"+str(t).replace('.', ',')+";"+str(mark)
                 s2 = ''
                 s2 = str(lon2).replace('.', ',') + ";" + str(lat2).replace('.', ',') + ";" +  str(alt).replace('.',',')+";"+str(lon2_tar).replace('.',',')+ ";"+str(lat2_tar).replace('.',',')+";"+ str(alt_tar).replace('.',',')
 
