@@ -47,6 +47,9 @@ class Logs_reader:
         return self.time0
 
     def sync(self, target_file, hunter_file):
+        hunter_path = '/'.join(hunter_file.split('/')[0:-1])+'/'
+        target_path = '/'.join(target_file.split('/')[0:-1]) + '/'
+
         prev_rcin=False
         #search target sync line
         with open(target_file, newline='') as f:
@@ -79,7 +82,7 @@ class Logs_reader:
                     break
         # _______________________
         print(line_number_target,",",line_number_hunter)
-        f = open(r'D:\target_sync.csv', "w")
+        f = open(target_path +'target_sync.csv', "w")
         for ll in range(line_number_target, len(list_target)):
             row_target = list_target[ll]
             if ((list_target[ll][0] == "RCIN" and not prev_rcin) or list_target[ll][0] == "GPS" ):
@@ -92,7 +95,7 @@ class Logs_reader:
         f.close()
 
         prev_rcin=False
-        f_hunter = open(r'D:\hunter_sync.csv', "w")
+        f_hunter = open(hunter_path+'hunter_sync.csv', "w")
         for kk in range(k, len(list_hunter)):
             row_hunter = list_hunter[kk]
             if ((list_hunter[kk][0] == "RCIN" and not prev_rcin) or list_hunter[kk][0] == "GPS"):
@@ -104,11 +107,12 @@ class Logs_reader:
                 else: prev_rcin=False
         f_hunter.close()
 
-        self.readLog(r'D:\target_sync.csv',r'D:\hunter_sync.csv',8)
+        self.readLog(target_path +'target_sync.csv',hunter_path+'hunter_sync.csv',8)
         #self.readLog(r'D:\tar_test.csv', r'D:\hun_test.csv', 8)
 
     def readLog(self,s_target,s,ch):
         with open( s,  newline='') as f:
+            hunter_path = '/'.join(s.split('/')[0:-1]) + '/'
 
             file_target=open(s_target,'r')
             target_reader=csv.reader(file_target, delimiter=';')
@@ -139,7 +143,7 @@ class Logs_reader:
 
         ch_v=0
         self.sect=1
-        f_write = open(r'D:\section_1.csv', "w")
+        f_write = open(hunter_path+'section_1.csv', "w")
 
         ch=8#aim channel
         for l in range(0, min(len(hunter_list),len(target_lines)-1)):
@@ -159,7 +163,7 @@ class Logs_reader:
                 self.sect = self.sect + 1
 
                 f_write.close()
-                f_write = open(r'D:\section_' + str(self.sect)+'.csv', "w")
+                f_write = open(hunter_path+'section_' + str(self.sect)+'.csv', "w")
 
                 self.t0=float(hunter_list[l][1])/1000000
 

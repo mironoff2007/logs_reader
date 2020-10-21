@@ -5,6 +5,8 @@ from tkinter import filedialog
 reader_volk = Logs_reader()
 file_target_path = filedialog.askopenfilename( title = "Select target file")
 file_hunter_path =   filedialog.askopenfilename( title = "Select hunter file")
+print(file_hunter_path)
+print()
 
 reader_volk.sync(file_target_path,file_hunter_path)
 
