@@ -105,7 +105,7 @@ class Logs_reader:
         f_hunter.close()
 
         self.readLog(r'D:\target_sync.csv',r'D:\hunter_sync.csv',8)
-
+        #self.readLog(r'D:\tar_test.csv', r'D:\hun_test.csv', 8)
 
     def readLog(self,s_target,s,ch):
         with open( s,  newline='') as f:
@@ -137,7 +137,7 @@ class Logs_reader:
 
             i = 0;
 
-
+        ch_v=0
         self.sect=1
         f_write = open(r'D:\section_1.csv', "w")
 

@@ -1,7 +1,12 @@
 from logs_reader import Logs_reader
+import tkinter as tk
+from tkinter import filedialog
 #
 reader_volk = Logs_reader()
-reader_volk.sync(r'D:\2020-08-20_10-59-12_tar.csv',r'D:\2020-08-20_10-59-45.csv')
+file_target_path = filedialog.askopenfilename( title = "Select target file")
+file_hunter_path =   filedialog.askopenfilename( title = "Select hunter file")
+
+reader_volk.sync(file_target_path,file_hunter_path)
 
 #
 # print("distance_lon_X=",reader_volk.calcDist(reader_volk.getLat0(),target_reader.getLat0(),0,0))
